@@ -1,3 +1,7 @@
+//everything still in progress, so if you want working version, douwnload the one befor this
+
+
+
 #pragma comment (lib, "ws2_32.lib")
 #include <winsock2.h>
 #include <iostream>
@@ -5,6 +9,18 @@
 #pragma warning (disable: 4996);
 
 using namespace std;
+
+SOCKET operator_socket;
+
+//void GetMSG()
+//{
+//	char msg[256];
+//	while (true)
+//	{
+//		recv(operator_socket, msg, size(msg), NULL);
+//		cout << msg << endl;
+//	}
+//}
 
 int main()
 {
@@ -25,7 +41,16 @@ int main()
 	// SOCKADDR_IN gets user's IP address
 	SOCKADDR_IN addr;
 	addr.sin_addr.s_addr = inet_addr(IP);
-	addr.sin_port = htons(10099);
+	cout << "Robot: 10099" << endl;
+	cout << "Moon Rover: 11099" << endl;
+	cout << "eye 1: 800" << endl;
+	cout << "eye 2: 801" << endl;
+	cout << "Ray cloud: 2368" << endl;
+	cout << "Scene (for reset): 1000" << endl;
+	cout << "enter port: ";
+	int port;
+	cin >> port;
+	addr.sin_port = htons(port);
 	addr.sin_family = AF_INET;
 	//creat socket for connetion to server
 	SOCKET operator_socket = socket(AF_INET, SOCK_STREAM, NULL);
@@ -36,9 +61,24 @@ int main()
 		system("pause");
 		return 1;
 	}
-	else
+	cout << "Connection succeeded" << endl;
+
+	//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) GetMSG, NULL, NULL, NULL);
+
+	char buffer[256];
+	char msg[256];
+	while (true)
 	{
-		cout << "Connection succeeded" << endl;
+		recv(operator_socket, msg, size(msg), NULL);
+		cout << msg << endl;
+		cin.getline(buffer, size (buffer));
+		send(operator_socket,buffer, size (buffer), NULL);
+		Sleep(4);
+		if (buffer == "stop")
+		{
+			break;
+		}
+
 	}
 	system("pause");
 	return 0;
