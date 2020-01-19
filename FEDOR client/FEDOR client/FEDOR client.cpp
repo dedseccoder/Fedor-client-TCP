@@ -3,6 +3,7 @@
 
 
 #pragma comment (lib, "ws2_32.lib")
+#include <opencv2\cvconfig.h>
 #include <winsock2.h>
 #include <iostream>
 
