@@ -3,26 +3,13 @@
 
 
 #pragma comment (lib, "ws2_32.lib")
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <winsock2.h>
+#include "Camera.h"
 #include <iostream>
 
 #pragma warning (disable: 4996);
 
 using namespace std;
-
-SOCKET operator_socket;
-
-//void GetMSG()
-//{
-//	char msg[256];
-//	while (true)
-//	{
-//		recv(operator_socket, msg, size(msg), NULL);
-//		cout << msg << endl;
-//	}
-//}
 
 int main()
 {
@@ -66,26 +53,18 @@ int main()
 	}
 	cout << "Connection succeeded" << endl;
 
-	if (port == 801 || port == 800)
+	if (port == 800 || port == 801)
 	{
-		cv::VideoCapture cam;// open the camera
-		cam.open(0, cv::CAP_DSHOW);
-		cv::Mat frame;
-		while (cv::waitKey(1) != 'a')
-		{
-			cam >> frame;
-			imshow("test", frame);
-		}
+		CameraCV get;
+		get.Camera_Connet(port, "Fedor Camera");
 	}
 
-	//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) GetMSG, NULL, NULL, NULL);
-
 	char buffer[256];
-	char msg[256];
+	char msg[5];
 	while (true)
 	{
 		recv(operator_socket, msg, size(msg), NULL);
-		cout << msg << endl;
+		cout << hex <<  msg << endl;
 		cin.getline(buffer, size (buffer));
 		send(operator_socket,buffer, size (buffer), NULL);
 		Sleep(4);
