@@ -3,7 +3,8 @@
 
 
 #pragma comment (lib, "ws2_32.lib")
-#include <opencv2\cvconfig.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <winsock2.h>
 #include <iostream>
 
@@ -25,6 +26,7 @@ SOCKET operator_socket;
 
 int main()
 {
+	system("color a");
 	// choose lib version
 	WSAData wsaData;
 	WORD lib_version = MAKEWORD(2, 1);
@@ -63,6 +65,18 @@ int main()
 		return 1;
 	}
 	cout << "Connection succeeded" << endl;
+
+	if (port == 801 || port == 800)
+	{
+		cv::VideoCapture cam;// open the camera
+		cam.open(0, cv::CAP_DSHOW);
+		cv::Mat frame;
+		while (cv::waitKey(1) != 'a')
+		{
+			cam >> frame;
+			imshow("test", frame);
+		}
+	}
 
 	//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) GetMSG, NULL, NULL, NULL);
 
