@@ -13,7 +13,7 @@ public:
 		port = port_input;
 		std::cout << "starting camera... " << std::endl;
 		VideoCapture cam;// open the camera
-		cam.open(0, CAP_DSHOW);
+		cam.open(0, CAP_DSHOW);// in progress
 		cv::Mat frame;
 		while (waitKey(1) != ']')
 		{

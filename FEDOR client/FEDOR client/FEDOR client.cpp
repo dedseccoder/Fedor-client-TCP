@@ -16,7 +16,7 @@ int main()
 	system("color a");
 	// choose lib version
 	WSAData wsaData;
-	WORD lib_version = MAKEWORD(2, 1);
+	WORD lib_version = MAKEWORD(2, 2);
 	//lib installation check 
 	if (WSAStartup(lib_version, &wsaData) != 0)
 	{
@@ -60,14 +60,16 @@ int main()
 	}
 
 	char buffer[256];
-	char msg[5];
+	char msg[256];
+	int SIZE;
 	while (true)
 	{
-		recv(operator_socket, msg, size(msg), NULL);
-		cout << hex <<  msg << endl;
 		cin.getline(buffer, size (buffer));
-		send(operator_socket,buffer, size (buffer), NULL);
-		Sleep(4);
+		send(operator_socket,buffer, sizeof(buffer), NULL);
+		SIZE = recv(operator_socket, msg, size(msg), NULL);
+		cout << "SIZE = " << SIZE << endl;
+		cout << hex << msg << endl;
+		Sleep(2);
 		if (buffer == "stop")
 		{
 			break;
