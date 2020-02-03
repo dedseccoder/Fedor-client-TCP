@@ -1,7 +1,3 @@
-//everything still in progress, so if you want working version, douwnload the one befor this
-
-
-
 #pragma comment (lib, "ws2_32.lib")
 #include <winsock2.h>
 #include "Camera.h"
